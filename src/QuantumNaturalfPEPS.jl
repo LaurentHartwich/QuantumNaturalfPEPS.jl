@@ -34,6 +34,8 @@ include("Properties/Properties.jl")
 include("Distributed/Distributed.jl")
 include("Test.jl")
 
+include("branch_test.jl")
+
 
 export PEPS
 export write!
