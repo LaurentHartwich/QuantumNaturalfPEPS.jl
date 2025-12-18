@@ -1,3 +1,8 @@
+# XXX XXX XXX XXX
+# somewhere in this file would be another contender for where to put the i. However, I would have to check that all Oks_and_Eks functions (singlecore, multicore, ...) actually pass through here, so for now it seems more logical to do it inside NaturalGradient once the whole Oks are computed already.
+# XXX XXX XXX XXX
+
+
 function get_Ok(peps::AbstractPEPS, env_top::Vector{Environment}, env_down::Vector{Environment}, logψ::Number, h_envs_r, h_envs_l, i::Int, j::Int)
     ok_tensor = 1
     f = 0
