@@ -122,9 +122,30 @@ function get_4body_term(peps::AbstractPEPS, env_top::Vector{Environment}, env_do
     end
 
     c = (con_right*con_left)[]
-    if isreal(c) && c < 0
-        c = complex(c)
+
+    try
+        if c isa Real && c < 0 # isreal(c) returns true even if c is of complex type but with imag(c)=0 (e.g. c = 1 + 0im). Therefore, instead, "c isa Real" has to be checked. 
+            c = complex(c)
+        end
+    catch e
+        open("bugfixing.txt", "a") do f
+            # some tests
+            try
+                println(f, "c = " * string(c))
+                println(f, "typeof(c) = " * string(typeof(c)))
+                println(f, "isreal(c) = " * string(isreal(c)))
+                println(f, "c isa Real = " * string(c isa Real))
+                println(f, "c isa Complex = " * string(c isa Complex))
+            catch e1
+                println(f, "\nAN ERROR OCCURRED INSIDE THE PRINTLN TESTS:")
+                println(f, sprint(showerror, e1) * "\n")
+            end
+            # error message
+            bt = catch_backtrace()
+            println(f, sprint(showerror, e, bt))
+        end
     end
+
     logψ_flipped = log(c) + f
     
     return logψ_flipped
@@ -178,9 +199,30 @@ function get_term(peps::AbstractPEPS, env_top::Vector{Environment}, env_down::Ve
         flip = flip * h_envs_r[maxy]
     end
     c = contract(flip)[]
-    if isreal(c) && c < 0
-        c = complex(c)
+
+    try
+        if c isa Real && c < 0 # isreal(c) returns true even if c is of complex type but with imag(c)=0 (e.g. c = 1 + 0im). Therefore, instead, "c isa Real" has to be checked. 
+            c = complex(c)
+        end
+    catch e
+        open("bugfixing.txt", "a") do f
+            # some tests
+            try
+                println(f, "c = " * string(c))
+                println(f, "typeof(c) = " * string(typeof(c)))
+                println(f, "isreal(c) = " * string(isreal(c)))
+                println(f, "c isa Real = " * string(c isa Real))
+                println(f, "c isa Complex = " * string(c isa Complex))
+            catch e1
+                println(f, "\nAN ERROR OCCURRED INSIDE THE PRINTLN TESTS:")
+                println(f, sprint(showerror, e1) * "\n")
+            end
+            # error message
+            bt = catch_backtrace()
+            println(f, sprint(showerror, e, bt))
+        end
     end
+
     logψ_flipped = log(c) + f
        
     return logψ_flipped
@@ -237,9 +279,30 @@ function get_longerHor_term(peps::AbstractPEPS, env_top::Vector{Environment}, en
         flip = flip * h_envs_r[maxy]
     end
     c = contract(flip)[]
-    if isreal(c) && c < 0
-        c = complex(c)
+
+    try
+        if c isa Real && c < 0 # isreal(c) returns true even if c is of complex type but with imag(c)=0 (e.g. c = 1 + 0im). Therefore, instead, "c isa Real" has to be checked. 
+            c = complex(c)
+        end
+    catch e
+        open("bugfixing.txt", "a") do f
+            # some tests
+            try
+                println(f, "c = " * string(c))
+                println(f, "typeof(c) = " * string(typeof(c)))
+                println(f, "isreal(c) = " * string(isreal(c)))
+                println(f, "c isa Real = " * string(c isa Real))
+                println(f, "c isa Complex = " * string(c isa Complex))
+            catch e1
+                println(f, "\nAN ERROR OCCURRED INSIDE THE PRINTLN TESTS:")
+                println(f, sprint(showerror, e1) * "\n")
+            end
+            # error message
+            bt = catch_backtrace()
+            println(f, sprint(showerror, e, bt))
+        end
     end
+
     logψ_flipped = log(c) + f
        
     return logψ_flipped
