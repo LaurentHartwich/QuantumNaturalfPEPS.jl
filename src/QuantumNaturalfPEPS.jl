@@ -36,7 +36,10 @@ include("Test.jl")
 
 # any files added by this branch are here.
 include("rte_development/rte_development.jl")
-
+# this is to block an accidental merge from the dev branch.
+function __init__()
+    # do nothing
+end
 
 export PEPS
 export write!
