@@ -70,6 +70,3 @@ function hamiltonian_opsum_J1J2(L::Int; J1::Real = -1, J2::Real = 0)
     end
     return ham
 end
-
-
-; # suppress output when including file
