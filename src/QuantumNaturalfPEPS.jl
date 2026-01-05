@@ -44,7 +44,7 @@ export generate_Oks_and_Eks
 # warns when using or importing the package from .julia/dev
 function __init__()
     if occursin(".julia/dev/", pathof(QuantumNaturalGradient))
-        @warn "You are currently on the .julia/dev/ version of QuantumNaturalGradient."
+        @warn "You are currently on the .julia/dev/ version of QuantumNaturalfPEPS."
     end
 end
 
