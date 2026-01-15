@@ -21,7 +21,7 @@ end
 
 
 # TFIM Hamiltonian (next neighbors interact only in spin-z component, and every spins x component interacts with external field)
-# actually, I think "-J" should be "-(J ħ^2)/4
+# note that the present definition uses the Pauli matrices directly, i.e. without the factor 1/2 from S = σ/2
 function hamiltonian_opsum_TFIM(L::Int; J::Real = -1, h::Real = 0)
     ham = OpSum()
     for i in 1:L, j in 1:L
@@ -43,6 +43,7 @@ end
 
 
 # Heisenberg J1J2 model (isotropic)
+# note that the present definition uses the Pauli matrices directly, i.e. without the factor 1/2 from S = σ/2
 # note the sign choice, H = -J1 ... -J2 ...
 function hamiltonian_opsum_J1J2(L::Int; J1::Real = -1, J2::Real = 0)
     ham = OpSum()
@@ -57,14 +58,12 @@ function hamiltonian_opsum_J1J2(L::Int; J1::Real = -1, J2::Real = 0)
             end
         end
     end
-    # second-next neighbor interactions
+    # next-to-nearest-neighbor interactions
     if J2 != 0
         for i in 1:L, j in 1:L, t in ["X", "Y", "Z"]
-            if j < L-1
-                ham .+= (-J2, t, (i, j), t, (i, j+2))
-            end
-            if i < L-1
-                ham .+= (-J2, t, (i, j), t, (i+2, j))
+            if i < L && j < L
+                ham .+= (-J2/4, t, (i, j), t, (i+1, j+1))
+                ham .+= (-J2/4, t, (i+1, j), t, (i, j+1))
             end
         end
     end
