@@ -45,6 +45,7 @@ export generate_Oks_and_Eks
 function __init__()
     if occursin(".julia/dev/", pathof(QuantumNaturalGradient))
         @warn "You are currently on the .julia/dev/ version of QuantumNaturalfPEPS."
+        flush(stderr)
     end
 end
 
