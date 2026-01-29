@@ -3,6 +3,10 @@ function generate_Oks_and_Eks_threaded(peps::AbstractPEPS, ham_op::TensorOperato
                                        double_layer_update=update_double_layer_envs!,
                                        kwargs...)
     function Oks_and_Eks_(Θ::Vector{T}, sample_nr::Integer; reset_double_layer=true, kwargs2...) where T
+        # generate_Oks_and_Eks may be passed a timer when being called, which is then baked into the function Oks_and_Eks it returns. However, if later that function Oks_and_Eks is called with a timer as a keyword arg, then that timer is meant to be used instead of the one from earlier -> replace it.
+        if haskey(kwargs2, :timer) && kwargs2[:timer] !== nothing
+            timer = kwargs[:timer]
+        end
         if length(kwargs2) > 0
             kwargs = merge(kwargs, kwargs2)
         end
@@ -13,6 +17,11 @@ function generate_Oks_and_Eks_threaded(peps::AbstractPEPS, ham_op::TensorOperato
         return Oks_and_Eks_threaded(peps, ham_op, sample_nr; timer, kwargs...)
     end
     function Oks_and_Eks_(peps_::Parameters{<:AbstractPEPS}, sample_nr::Integer; reset_double_layer=false, kwargs2...)
+        # generate_Oks_and_Eks may be passed a timer when being called, which is then baked into the function Oks_and_Eks it returns. However, if later that function Oks_and_Eks is called with a timer as a keyword arg, then that timer is meant to be used instead of the one from earlier -> replace it.
+        if haskey(kwargs2, :timer) && kwargs2[:timer] !== nothing
+            timer = kwargs[:timer]
+        end
+
         peps_ = peps_.obj
         if getfield(peps_, :double_layer_envs) === nothing
             @timeit timer "double_layer_envs" double_layer_update(peps_)
