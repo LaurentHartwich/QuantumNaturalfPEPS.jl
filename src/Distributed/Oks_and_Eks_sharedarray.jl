@@ -76,7 +76,7 @@ function Oks_and_Eks_multiproc_sharedarrays(peps, ham_op, sample_nr; Oks=nothing
     logpcs = Vector{eltype_real}(undef, sample_nr_eff)
     contract_dims = Vector{Int}(undef, sample_nr_eff)
 
-    @timeit timer "recieve results" for (i, task) in enumerate(out)
+    @timeit timer "receive results" for (i, task) in enumerate(out)
         i1 = k_eff * (i - 1) + 1
         i2 = k_eff * i
         out_dict = fetch(task)
