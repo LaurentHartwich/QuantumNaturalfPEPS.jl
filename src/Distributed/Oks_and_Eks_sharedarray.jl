@@ -24,7 +24,7 @@ function generate_Oks_and_Eks_multiproc_sharedarrays(peps::AbstractPEPS, ham_op:
         if length(kwargs2) > 0
             kwargs = merge(kwargs, kwargs2)
         end
-        return @timeit timer "Sampling etc." Oks_and_Eks_multiproc_sharedarrays(peps_, ham_op, sample_nr;
+        return @timeit timer "sampling" Oks_and_Eks_multiproc_sharedarrays(peps_, ham_op, sample_nr;
                                                                #=timer=timer,=# n_threads=n_threads, kwargs...)
     end
     return Oks_and_Eks_
