@@ -12,7 +12,7 @@ function generate_Oks_and_Eks_multiproc_sharedarrays(peps::AbstractPEPS, ham_op:
             @timeit timer "double_layer_envs" double_layer_update(peps) # update the double layer environments once for the peps
         end
 
-        return @timeit timer "Oks_and_Eks" Oks_and_Eks_multiproc_sharedarrays(peps, ham_op, sample_nr;
+        return @timeit timer "sampling" Oks_and_Eks_multiproc_sharedarrays(peps, ham_op, sample_nr;
                                                                timer=timer, n_threads=n_threads, kwargs...)
     end
 
@@ -25,7 +25,7 @@ function generate_Oks_and_Eks_multiproc_sharedarrays(peps::AbstractPEPS, ham_op:
             kwargs = merge(kwargs, kwargs2)
         end
         return @timeit timer "sampling" Oks_and_Eks_multiproc_sharedarrays(peps_, ham_op, sample_nr;
-                                                               #=timer=timer,=# n_threads=n_threads, kwargs...)
+                                                               timer=timer, n_threads=n_threads, kwargs...)
     end
     return Oks_and_Eks_
 end
