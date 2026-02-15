@@ -3,6 +3,7 @@ function generate_Oks_and_Eks_multiproc_sharedarrays(peps::AbstractPEPS, ham_op:
                                                      reset_double_layer=true,
                                                      kwargs...)
     n_threads = Distributed.remotecall_fetch(()->Threads.nthreads(), workers()[1])
+    # this function will be called when QuantumNaturalGradient.evolve is passed θ = convert(Vector, peps)
     function Oks_and_Eks_(Θ::Vector{T}, sample_nr::Integer; kwargs2...) where T
         if length(kwargs2) > 0
             kwargs = merge(kwargs, kwargs2)
@@ -15,7 +16,7 @@ function generate_Oks_and_Eks_multiproc_sharedarrays(peps::AbstractPEPS, ham_op:
         return @timeit timer "sampling" Oks_and_Eks_multiproc_sharedarrays(peps, ham_op, sample_nr;
                                                                timer=timer, n_threads=n_threads, kwargs...)
     end
-
+    # this function will be called when QuantumNaturalGradient.evolve is passed θ = QuantumNaturalGradient.Parameters(peps)
     function Oks_and_Eks_(peps_::Parameters{<:AbstractPEPS}, sample_nr::Integer; kwargs2...)
         peps_ = peps_.obj
         if getfield(peps_, :double_layer_envs) === nothing
